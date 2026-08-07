@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Create Account</h2>
+    <p class="sub-text">
+      Start your journey with Career Hub by creating an account. Fill in the
+      details below to get started.
+    </p>
+    <form method="POST" action="{{ url_for('signup') }}">
+      <input type="text" name="username" placeholder="Choose a username" required />
+      <input type="email" name="email" placeholder="Enter your Email" required />
+      <input
+        type="password"
+        name="password"
+        placeholder="Create a Password"
+        required
+        minlength="6"
+      />
+      <p class="sub-text">
+        Please enter at least 6 characters for your password.
+      </p>
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <p class="switch-auth">
+      Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+# Environment / secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+.venv/
+
+# Local SQLite fallback database
+career_hub.db
+
+# Uploaded files (if you later save them to disk)
+uploads/
+
+# OS / editor
+.DS_Store
+.vscode/

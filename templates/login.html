@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Login</h2>
+        <p class="sub-text">
+            Welcome back! Please enter your credentials to access your Career Hub account.
+        </p>
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="email" name="email" placeholder="Enter your Email" required />
+            <input type="password" name="password" placeholder="Enter your Password" required />
+            <button type="submit">Log In</button>
+        </form>
+
+        <div class="auth-links">
+            <a href="{{ url_for('forget') }}">Forgot Password?</a>
+        </div>
+
+        <p class="switch-auth">
+            Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

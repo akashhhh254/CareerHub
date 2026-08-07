@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Your Analysis History</h2>
+
+{% if not reports %}
+<div class="card">
+  <p>You haven't analyzed any resumes yet. <a href="{{ url_for('dashboard') }}">Analyze one now</a>.</p>
+</div>
+{% endif %}
+
+{% for r in reports %}
+<div class="card history-card">
+  <p class="history-goal"><strong>Target role:</strong> {{ r.user_goal }}</p>
+  <p class="history-preview"><strong>Resume preview:</strong> {{ r.resume_text[:150] }}...</p>
+
+  <hr />
+
+  {% if r.result.error %}
+  <p class="alert alert-error">{{ r.result.error }}</p>
+  {% else %}
+
+  <div class="score-section">
+      <div class="score-circle small">
+          <span>{{ r.result.resume_score }}</span><small>/100</small>
+      </div>
+      <p>{{ r.result.overall_feedback }}</p>
+  </div>
+
+  <div class="result-grid">
+      <div class="result-block">
+          <h4>Skills</h4>
+          <ul class="tag-list">
+              {% for skill in r.result.skills %}
+              <li class="tag tag-good">{{ skill }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+
+      <div class="result-block">
+          <h4>Missing Skills</h4>
+          <ul class="tag-list">
+              {% for skill in r.result.missing_skills %}
+              <li class="tag tag-warn">{{ skill }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+
+      <div class="result-block">
+          <h4>Recommended Roles</h4>
+          <ul class="tag-list">
+              {% for role in r.result.recommended_roles %}
+              <li class="tag tag-info">{{ role }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+
+      <div class="result-block">
+          <h4>Roadmap</h4>
+          <ul>
+              {% for item in r.result.roadmap %}
+              <li>{{ item }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+
+      <div class="result-block">
+          <h4>Interview Preparation</h4>
+          <ul>
+              {% for q in r.result.interview_questions %}
+              <li>{{ q }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+  </div>
+
+  {% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}

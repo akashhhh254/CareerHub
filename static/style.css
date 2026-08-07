@@ -1,0 +1,480 @@
+/* =========================================================
+   Career Hub — Design System
+   Concept: a resume is a document under review — the visual
+   language borrows from certificates, filing dossiers, and
+   official stamps/seals to make the "your resume, evaluated"
+   idea concrete rather than generic-dashboard.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root {
+  /* Color */
+  --ink: #12262a;
+  --ink-soft: #294449;
+  --paper: #f3f5f1;
+  --paper-raised: #ffffff;
+  --line: #dbe0d8;
+
+  --teal: #1f6f6b;
+  --teal-dark: #123f3d;
+  --gold: #c1892f;
+  --gold-soft: #f2d9ab;
+
+  --good: #2f8f5b;
+  --good-bg: #e5f3ea;
+  --warn: #c1892f;
+  --warn-bg: #fbf0dd;
+  --info: #2a5f8f;
+  --info-bg: #e6eef7;
+  --error: #b5432f;
+  --error-bg: #fbe8e3;
+
+  /* Type */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  --radius: 10px;
+  --shadow-card: 0 1px 2px rgba(18, 38, 42, 0.06), 0 8px 24px -12px rgba(18, 38, 42, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+a {
+  color: var(--teal);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+h2 { font-size: 1.9rem; letter-spacing: -0.01em; }
+h3 { font-size: 1.25rem; }
+h4 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal-dark);
+  margin-bottom: 10px;
+}
+
+p { margin: 0 0 12px; }
+
+/* focus visibility, kept for every interactive element */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Header / Nav ---------- */
+
+header {
+  background: var(--ink);
+  border-bottom: 3px solid var(--gold);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #fff !important;
+  letter-spacing: -0.01em;
+}
+.brand:hover { text-decoration: none; opacity: 0.9; }
+
+header nav {
+  display: flex;
+  gap: 24px;
+}
+
+header nav a {
+  color: #cfe3e0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+header nav a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ---------- Layout shell ---------- */
+
+main.container {
+  padding-top: 40px;
+  padding-bottom: 64px;
+  min-height: calc(100vh - 180px);
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- Alerts / flash messages ---------- */
+
+.flash-wrap {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  border: 1px solid transparent;
+}
+.alert-error { background: var(--error-bg); color: var(--error); border-color: #f0c9bf; }
+.alert-success { background: var(--good-bg); color: var(--good); border-color: #bfe2cc; }
+
+/* ---------- Cards (base filing-card look) ---------- */
+
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+/* filing-tab notch, the page's signature structural motif:
+   every card reads like a tab pulled from a dossier */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 24px;
+  width: 46px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 0 0 4px 4px;
+}
+
+/* ---------- Forms ---------- */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: -6px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+textarea {
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 140px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--teal);
+  background: #fff;
+  outline: none;
+}
+
+input[type="file"] {
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.or-divider {
+  text-align: center;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin: 4px 0;
+}
+
+button, .btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 13px 22px;
+  border: none;
+  border-radius: 8px;
+  background: var(--teal);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  align-self: flex-start;
+}
+button:hover { background: var(--teal-dark); }
+button:active { transform: translateY(1px); }
+
+/* ---------- Auth pages ---------- */
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.auth-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+.auth-card::before {
+  content: "";
+  display: block;
+  width: 46px;
+  height: 3px;
+  background: var(--gold);
+  margin: 0 auto 18px;
+}
+
+.auth-card h2 { margin-bottom: 8px; }
+
+.sub-text {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.auth-card form { text-align: left; }
+
+.auth-card button {
+  align-self: stretch;
+  margin-top: 6px;
+}
+
+.auth-links {
+  margin-top: 14px;
+  font-size: 0.86rem;
+}
+
+.switch-auth {
+  margin-top: 22px;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Dashboard: score seal ---------- */
+
+.upload-card h3 { margin-bottom: 4px; }
+
+.result-card {
+  position: relative;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid rgba(36, 61, 69, 0.12);
+  box-shadow: 0 18px 40px rgba(22, 35, 39, 0.08);
+  border-radius: 20px;
+}
+
+.result-card::before {
+  content: "Analysis Summary";
+  position: absolute;
+  top: -12px;
+  left: 32px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #f9fafb;
+  border: 1px solid rgba(36, 61, 69, 0.08);
+  border-radius: 999px;
+  color: var(--ink-soft);
+}
+
+.score-section {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  margin-bottom: 26px;
+  background: #f7f9f8;
+  border: 1px solid rgba(36, 61, 69, 0.08);
+  border-radius: 18px;
+}
+
+.score-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, #ffffff 58%, rgba(31, 111, 107, 0.08) 62%);
+  font-family: var(--font-mono);
+  color: var(--teal-dark);
+  box-shadow: inset 0 0 0 1px rgba(36, 61, 69, 0.06);
+}
+.score-circle::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  border: 4px solid rgba(31, 111, 107, 0.14);
+}
+.score-circle span { font-size: 2rem; font-weight: 700; }
+.score-circle small { font-size: 0.72rem; color: var(--ink-soft); }
+
+.score-section h3 { margin-bottom: 8px; font-size: 1.05rem; }
+.score-section p { margin: 0; color: var(--ink-soft); }
+
+/* ---------- Result grid ---------- */
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.result-block {
+  background: #ffffff;
+  border: 1px solid rgba(36, 61, 69, 0.08);
+  border-radius: 18px;
+  padding: 24px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.result-block h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #1f4d53;
+}
+
+.result-block ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+}
+.result-block li { margin-bottom: 10px; line-height: 1.6; }
+
+.result-block .tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+}
+
+.result-block .tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.tag-list li { margin: 0; }
+
+.tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(36, 61, 69, 0.08);
+}
+.tag-good { background: #ecf7ef; color: #23684c; border-color: #cee1d5; }
+.tag-warn { background: #fff6ec; color: #a4702e; border-color: #e7d4b4; }
+.tag-info { background: #eff4fb; color: #28557d; border-color: #c7d5e5; }
+
+/* ---------- History ---------- */
+
+.history-card { padding: 28px; }
+.history-goal { font-size: 0.95rem; }
+.history-preview {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+.history-card hr {
+  border: none;
+  border-top: 1px dashed var(--line);
+  margin: 16px 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .navbar-inner { flex-direction: column; gap: 12px; align-items: flex-start; }
+  header nav { gap: 16px; }
+  .card, .result-card, .auth-card { padding: 22px; }
+  .score-section { flex-direction: column; align-items: flex-start; }
+  h2 { font-size: 1.5rem; }
+}

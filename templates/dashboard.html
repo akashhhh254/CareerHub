@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Welcome to Your Dashboard, {{ user }}</h2>
+
+<div class="card upload-card">
+    <h3>Resume Analyzer</h3>
+
+    <form method="POST" action="{{ url_for('dashboard') }}" enctype="multipart/form-data">
+        <label for="resume">Paste resume text</label>
+        <textarea name="resume" id="resume" rows="8" placeholder="Paste your resume text here..."></textarea>
+
+        <p class="or-divider">OR upload a file</p>
+        <input type="file" name="resume_file" accept=".pdf,.docx" />
+
+        <label for="desired_role">What role are you aiming for?</label>
+        <input
+          type="text"
+          id="desired_role"
+          name="desired_role"
+          placeholder="e.g. Cloud Engineer, Data Scientist, Backend Developer"
+          required
+        />
+
+        <button type="submit">Analyze Resume</button>
+    </form>
+</div>
+
+{% if result %}
+<div class="card result-card">
+    {% if result.error %}
+    <p class="alert alert-error">{{ result.error }}</p>
+    {% else %}
+
+    <div class="score-section">
+        <div class="score-circle">
+            <span>{{ result.resume_score }}</span><small>/100</small>
+        </div>
+        <div>
+            <h3>Overall Feedback</h3>
+            <p>{{ result.overall_feedback }}</p>
+        </div>
+    </div>
+
+    <div class="result-grid">
+        <div class="result-block">
+            <h4>Detected Skills</h4>
+            <ul class="tag-list">
+                {% for skill in result.skills %}
+                <li class="tag tag-good">{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Missing Skills</h4>
+            <ul class="tag-list">
+                {% for skill in result.missing_skills %}
+                <li class="tag tag-warn">{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Strengths</h4>
+            <ul>
+                {% for item in result.strengths %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Weaknesses</h4>
+            <ul>
+                {% for item in result.weaknesses %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Improvement Suggestions</h4>
+            <ul>
+                {% for item in result.improvement_suggestions %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Recommended Roles</h4>
+            <ul class="tag-list">
+                {% for role in result.recommended_roles %}
+                <li class="tag tag-info">{{ role }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Learning Roadmap</h4>
+            <ul>
+                {% for item in result.roadmap %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Likely Interview Questions</h4>
+            <ul>
+                {% for q in result.interview_questions %}
+                <li>{{ q }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
