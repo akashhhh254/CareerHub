@@ -15,16 +15,16 @@ import time
 load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env")
 
 _api_key = os.getenv("GEMINI_API_KEY")
-if not _api_key:
-    raise RuntimeError(
-        "GEMINI_API_KEY is not set. Create a .env file next to app.py "
-        "(copy .env.example to .env) and set GEMINI_API_KEY=your_key_here. "
-        "Get a free key at https://aistudio.google.com/apikey"
-    )
+_client = None
+_client_error = None
 
-# Pass the key explicitly rather than relying on implicit env lookup --
-# this is what actually fixes the "Missing key inputs argument!" error.
-_client = genai.Client(api_key=_api_key)
+if _api_key:
+    try:
+        # Pass the key explicitly rather than relying on implicit env lookup --
+        # this is what actually fixes the "Missing key inputs argument!" error.
+        _client = genai.Client(api_key=_api_key)
+    except Exception as exc:
+        _client_error = exc
 
 # gemini-2.5-flash is free of charge on the Gemini API free tier
 # (see https://ai.google.dev/gemini-api/docs/pricing) and is a stable
@@ -112,6 +112,12 @@ def analyze_resume(resume_text, user_goal):
     """
     if not resume_text or not resume_text.strip():
         return {"error": "No resume text was found to analyze."}
+
+    if _client is None:
+        return {
+            "error": "Resume analysis is unavailable right now because the AI service is not configured. "
+            "Set GEMINI_API_KEY in your .env file to enable analysis."
+        }
 
     prompt = f"""
 You are a senior software engineer and hiring manager reviewing a resume.
