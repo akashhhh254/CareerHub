@@ -1,0 +1,143 @@
+<%- include('partials/header') %>
+
+<h2>Welcome to Your Dashboard, <%= user %></h2>
+
+<div class="card upload-card">
+    <h3>Resume Analyzer</h3>
+
+    <form method="POST" action="/dashboard" enctype="multipart/form-data">
+        <label for="resume">Paste resume text</label>
+        <textarea name="resume" id="resume" rows="8" placeholder="Paste your resume text here..."><%= (typeof resume_text !== 'undefined' && resume_text) ? resume_text : '' %></textarea>
+
+        <p class="or-divider">OR upload a file</p>
+        <input type="file" name="resume_file" accept=".pdf,.docx" />
+
+        <label for="desired_role">What role are you aiming for?</label>
+        <input
+          type="text"
+          id="desired_role"
+          name="desired_role"
+          value="<%= (typeof user_goal !== 'undefined' && user_goal) ? user_goal : '' %>"
+          placeholder="e.g. Cloud Engineer, Data Scientist, Backend Developer"
+          required
+        />
+
+        <button type="submit">Analyze Resume</button>
+    </form>
+</div>
+
+<% if (typeof result !== 'undefined' && result) { %>
+<div class="card result-card">
+    <% if (result.error) { %>
+    <p class="alert alert-error"><%= result.error %></p>
+    <% } else { %>
+
+    <div class="score-section">
+        <div class="score-circle">
+            <span><%= result.resume_score %></span><small>/100</small>
+        </div>
+        <div>
+            <h3>Overall Feedback</h3>
+            <p><%= result.overall_feedback %></p>
+        </div>
+    </div>
+
+    <div class="result-grid">
+        <div class="result-block">
+            <h4>Detected Skills</h4>
+            <ul class="tag-list">
+                <% if (result.skills && result.skills.length > 0) { %>
+                  <% result.skills.forEach(function(skill) { %>
+                  <li class="tag tag-good"><%= skill %></li>
+                  <% }); %>
+                <% } else { %>
+                  <li style="list-style: none; color: var(--ink-soft);">No specific skills detected.</li>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Missing Skills</h4>
+            <ul class="tag-list">
+                <% if (result.missing_skills && result.missing_skills.length > 0) { %>
+                  <% result.missing_skills.forEach(function(skill) { %>
+                  <li class="tag tag-warn"><%= skill %></li>
+                  <% }); %>
+                <% } else { %>
+                  <li style="list-style: none; color: var(--ink-soft);">No missing skills identified.</li>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Strengths</h4>
+            <ul>
+                <% if (result.strengths && result.strengths.length > 0) { %>
+                  <% result.strengths.forEach(function(item) { %>
+                  <li><%= item %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Weaknesses</h4>
+            <ul>
+                <% if (result.weaknesses && result.weaknesses.length > 0) { %>
+                  <% result.weaknesses.forEach(function(item) { %>
+                  <li><%= item %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Improvement Suggestions</h4>
+            <ul>
+                <% if (result.improvement_suggestions && result.improvement_suggestions.length > 0) { %>
+                  <% result.improvement_suggestions.forEach(function(item) { %>
+                  <li><%= item %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Recommended Roles</h4>
+            <ul class="tag-list">
+                <% if (result.recommended_roles && result.recommended_roles.length > 0) { %>
+                  <% result.recommended_roles.forEach(function(role) { %>
+                  <li class="tag tag-info"><%= role %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Learning Roadmap</h4>
+            <ul>
+                <% if (result.roadmap && result.roadmap.length > 0) { %>
+                  <% result.roadmap.forEach(function(item) { %>
+                  <li><%= item %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Likely Interview Questions</h4>
+            <ul>
+                <% if (result.interview_questions && result.interview_questions.length > 0) { %>
+                  <% result.interview_questions.forEach(function(q) { %>
+                  <li><%= q %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <% } %>
+</div>
+<% } %>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Career Hub</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container navbar-inner">
+        <a class="brand" href="/">Career Hub</a>
+        <nav>
+          <% if (typeof user !== 'undefined' && user) { %>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/history">History</a>
+          <a href="/logout">Logout</a>
+          <% } else { %>
+          <a href="/login">Login</a>
+          <a href="/signup">Sign Up</a>
+          <% } %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <% if (typeof messages !== 'undefined' && messages && messages.length > 0) { %>
+      <div class="flash-wrap">
+        <% messages.forEach(function(msg) { %>
+        <div class="alert alert-<%= msg.category %>"><%= msg.text %></div>
+        <% }); %>
+      </div>
+      <% } %>

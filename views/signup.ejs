@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% block content %}
+<%- include('partials/header') %>
 
 <div class="auth-container">
   <div class="auth-card">
@@ -8,7 +7,7 @@
       Start your journey with Career Hub by creating an account. Fill in the
       details below to get started.
     </p>
-    <form method="POST" action="{{ url_for('signup') }}">
+    <form method="POST" action="/signup">
       <input type="text" name="username" placeholder="Choose a username" required />
       <input type="email" name="email" placeholder="Enter your Email" required />
       <input
@@ -25,8 +24,9 @@
     </form>
 
     <p class="switch-auth">
-      Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.
+      Already have an account? <a href="/login">Log in here</a>.
     </p>
   </div>
 </div>
-{% endblock %}
+
+<%- include('partials/footer') %>

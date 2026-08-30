@@ -1,0 +1,95 @@
+<%- include('partials/header') %>
+
+<h2>Your Analysis History</h2>
+
+<% if (!reports || reports.length === 0) { %>
+<div class="card">
+  <p>You haven't analyzed any resumes yet. <a href="/dashboard">Analyze one now</a>.</p>
+</div>
+<% } %>
+
+<% if (reports && reports.length > 0) { %>
+  <% reports.forEach(function(r) { %>
+  <div class="card history-card">
+    <p class="history-goal"><strong>Target role:</strong> <%= r.user_goal %></p>
+    <p class="history-preview"><strong>Resume preview:</strong> <%= r.resume_text ? (r.resume_text.slice(0, 150) + (r.resume_text.length > 150 ? '...' : '')) : '' %></p>
+
+    <hr />
+
+    <% if (r.result && r.result.error) { %>
+    <p class="alert alert-error"><%= r.result.error %></p>
+    <% } else if (r.result) { %>
+
+    <div class="score-section">
+        <div class="score-circle small">
+            <span><%= r.result.resume_score %></span><small>/100</small>
+        </div>
+        <div>
+            <h3>Overall Feedback</h3>
+            <p><%= r.result.overall_feedback %></p>
+        </div>
+    </div>
+
+    <div class="result-grid">
+        <div class="result-block">
+            <h4>Skills</h4>
+            <ul class="tag-list">
+                <% if (r.result.skills && r.result.skills.length > 0) { %>
+                  <% r.result.skills.forEach(function(skill) { %>
+                  <li class="tag tag-good"><%= skill %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Missing Skills</h4>
+            <ul class="tag-list">
+                <% if (r.result.missing_skills && r.result.missing_skills.length > 0) { %>
+                  <% r.result.missing_skills.forEach(function(skill) { %>
+                  <li class="tag tag-warn"><%= skill %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Recommended Roles</h4>
+            <ul class="tag-list">
+                <% if (r.result.recommended_roles && r.result.recommended_roles.length > 0) { %>
+                  <% r.result.recommended_roles.forEach(function(role) { %>
+                  <li class="tag tag-info"><%= role %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Roadmap</h4>
+            <ul>
+                <% if (r.result.roadmap && r.result.roadmap.length > 0) { %>
+                  <% r.result.roadmap.forEach(function(item) { %>
+                  <li><%= item %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="result-block">
+            <h4>Interview Preparation</h4>
+            <ul>
+                <% if (r.result.interview_questions && r.result.interview_questions.length > 0) { %>
+                  <% r.result.interview_questions.forEach(function(q) { %>
+                  <li><%= q %></li>
+                  <% }); %>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <% } %>
+  </div>
+  <% }); %>
+<% } %>
+
+<%- include('partials/footer') %>

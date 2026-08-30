@@ -1,0 +1,8 @@
+{
+  "name": "Career Hub",
+  "description": "AI-powered Resume Analyzer that provides resume scoring, skill gap analysis, personalized improvement suggestions, and career roadmaps.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

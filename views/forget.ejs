@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% block content %}
+<%- include('partials/header') %>
 
 <div class="auth-container">
   <div class="auth-card">
@@ -10,7 +9,7 @@
       password.
     </p>
 
-    <form action="{{ url_for('forget') }}" method="POST">
+    <form action="/forget" method="POST">
       <input
         type="email"
         id="email"
@@ -23,9 +22,9 @@
 
     <p class="switch-auth">
       Remember your password?
-      <a href="{{ url_for('login') }}">Back to Login</a>
+      <a href="/login">Back to Login</a>
     </p>
   </div>
 </div>
 
-{% endblock %}
+<%- include('partials/footer') %>
